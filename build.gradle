@@ -1,0 +1,58 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+ext {
+    junitJupiterVersion = '5.8.2'
+    junitPlatformSuiteVersion = '1.8.2'
+    cucumberVersion = '7.3.4'
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:${junitJupiterVersion}")
+    testImplementation("org.junit.platform:junit-platform-suite:${junitPlatformSuiteVersion}")
+    testImplementation("org.junit.vintage:junit-vintage-engine:${junitJupiterVersion}")
+
+    testImplementation("io.cucumber:cucumber-java8:${cucumberVersion}")
+    testImplementation("io.cucumber:cucumber-junit:${cucumberVersion}")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
+
+    implementation 'io.qameta.allure:allure-cucumber7-jvm:2.18.1'
+}
+
+test {
+    systemProperties(project.gradle.startParameter.systemPropertiesArgs)
+
+    useJUnitPlatform{
+    }
+
+    testLogging {
+        events "passed", "failed"
+        showStandardStreams = true
+    }
+}
+
+compileTestJava {
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+    options.compilerArgs += '-parameters'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "utf-8"
+}
+tasks.withType(Javadoc) {
+    options.encoding = "utf-8"
+}
