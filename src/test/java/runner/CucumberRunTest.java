@@ -17,9 +17,5 @@ import static io.cucumber.junit.platform.engine.Constants.GLUE_PROPERTY_NAME;
 @IncludeEngines("cucumber")
 @SelectClasspathResource("feature") // feature目录
 @ConfigurationParameter(key = GLUE_PROPERTY_NAME, value = "steps") // step目录
-@CucumberOptions(
-        monochrome = true,
-        stepNotifications = true
-)
 public class CucumberRunTest {
 }
